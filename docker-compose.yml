@@ -1,0 +1,15 @@
+# https://developer.redis.com/create/docker/nodejs-nginx-redis/
+
+version: '3.9'
+services:
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+
+
+#  web:
+#    restart: on-failure
+#    build: ./web
+#    ports:
+#      - '4000:5000'
