@@ -12,7 +12,7 @@
 - [ ] Search bar
 - [ ] Automate Scrapping Process
 - [ ] Connection to a Videogame DB API
-  *  This is for add fuctionality like
+  **This is for add fuctionality like**
   - [ ] Custom Filtering
   - [ ] Like, Dislike
 - [ ] Add native comments
