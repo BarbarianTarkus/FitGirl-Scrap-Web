@@ -5,32 +5,35 @@
 	export let data: {games: Game[]};
 
 
-	console.log('page info:', data.games.length);
+	console.log('page info:', data.games[0]);
 
 	let size = data.games.length;
-	//let grid = createGrid();
+	let grid = createGrid();
 
     function createGrid() {
     	// only want unique cards
-    	let cards = new Set<string>();
+    	let cards = new Set<Game>();
     	// half because we duplicate the cards
-
-    	let maxSize = 20;
         let i = 0;
-    	while (i < maxSize) {
+    	while (cards.size < size) {
     		// pick random emoji
-    		cards.add(data.games[i].title);
+    		cards.add(data.games[i]);
+            ++i;
     	}
 
     	return [...cards];
     }
+
+
+
 </script>
 
-
-<!-- <div class="cards">
-    {#each grid as card, cardIndex}
+<div class="cards">
+    {#each grid as card}
         <button class="card">
-            <div>{card}</div>
+            <a href={card.url} target="_blank">
+                <img src={card.image} alt={card.title} />
+            </a>
         </button>
     {/each}
 </div>
@@ -46,10 +49,15 @@
 	.card {
 		height: 400px;
 		width: 300px;
-		font-size: 4rem;
 		background-color: var(--bg-2);
 		&.selected {
 			border: 4px solid var(--border);
 		}
 	}
-</style> -->
+
+    .card img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+</style>
