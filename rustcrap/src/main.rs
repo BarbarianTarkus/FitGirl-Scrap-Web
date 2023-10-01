@@ -1,14 +1,13 @@
+use csv::{Writer, WriterBuilder};
 use reqwest::blocking::{get, Client};
-use scraper::{self, html, Selector};
+use scraper::{self, Html, Selector};
 use select::document::Document;
 use select::predicate::Name;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::prelude::*;
-use csv::{Writer, WriterBuilder};
 
-#[derive(Debug)]
-#[derive(serde::Serialize)]
+#[derive(Debug, serde::Serialize)]
 struct Item {
     title: Option<String>,
     image: Option<String>,
@@ -16,6 +15,7 @@ struct Item {
     description: Option<String>,
     magnet: Option<String>,
     size: Option<String>,
+    date: Option<String>,
 }
 
 impl Item {
@@ -50,6 +50,12 @@ impl Item {
             .next()
             .map(|size| size.text().collect::<String>());
 
+        let date = html_item
+            .select(&Selector::parse("span.entry-date > a > time").unwrap())
+            .next()
+            .and_then(|a| a.value().attr("datetime"))
+            .map(str::to_owned);
+
         Item {
             title,
             image,
@@ -57,6 +63,7 @@ impl Item {
             description,
             magnet,
             size,
+            date,
         }
     }
 }
@@ -65,7 +72,6 @@ fn output_items_to_csv(items: Vec<Item>) {
     let mut writer = WriterBuilder::new()
         .has_headers(true)
         .from_writer(File::create("output.csv").unwrap());
-
 
     for item in items {
         if let Some(_) = item.magnet {

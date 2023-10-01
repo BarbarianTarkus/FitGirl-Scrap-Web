@@ -4,9 +4,6 @@
 
 	export let data: {games: Game[]};
 
-
-	console.log('page info:', data.games[0]);
-
 	let size = data.games.length;
 	let grid = createGrid();
 
@@ -60,4 +57,9 @@
         width: 100%;
         object-fit: cover;
     }
+    /*hover*/
+    .card:hover img {
+        filter: brightness(0.5);
+    }
+
 </style>
