@@ -1,32 +1,30 @@
 <script lang="ts">
-    import type {Game} from '$lib/types';
+	import type { Game } from '$lib/types';
 	import { onMount } from 'svelte';
-    import {greet} from '$lib/redis';
-    
-    onMount(async () => {
-       greet()
-    });
 
-    let size = 20;
-    //let grid = createGrid()
+	export let data: {games: Game[]};
 
-    // function createGrid() {
-    //     // only want unique cards
-    //     let cards = new Set<string>()
-    //     // half because we duplicate the cards
-    //     console.log("page info:",games)
 
-    //     let maxSize = games.length
+	console.log('page info:', data.games.length);
 
-    //     while (cards.size < maxSize) {
-    //         // pick random emoji
-    //         cards.add(games["title"])
-    //     }
+	let size = data.games.length;
+	//let grid = createGrid();
 
-    //     return [...cards]
-    // }
+    function createGrid() {
+    	// only want unique cards
+    	let cards = new Set<string>();
+    	// half because we duplicate the cards
+
+    	let maxSize = 20;
+        let i = 0;
+    	while (i < maxSize) {
+    		// pick random emoji
+    		cards.add(data.games[i].title);
+    	}
+
+    	return [...cards];
+    }
 </script>
-
 
 
 <!-- <div class="cards">
@@ -55,4 +53,3 @@
 		}
 	}
 </style> -->
-
