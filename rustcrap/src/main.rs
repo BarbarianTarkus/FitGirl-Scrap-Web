@@ -71,7 +71,7 @@ fn output_items_to_csv(items: Vec<Item>) {
         .from_writer(File::create("output.csv").unwrap());
 
     for item in items {
-        if let Some(_) = item.magnet {
+        if item.magnet.is_some() {
             writer.serialize(item).unwrap();
         }
     }
