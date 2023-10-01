@@ -6,7 +6,7 @@ Preview
 ![image](https://github.com/BarbarianTarkus/FitGirl-Scrap-Web/assets/44118965/66e89b72-024b-4c47-858b-bcd5222b463f)
 
 
-Dev:
+** Dev: **
 - [ ] Pagination
 - [ ] Search bar
 - [ ] Automate Scrapping Process
@@ -17,7 +17,7 @@ Dev:
 - [ ] Add native comments
 
 
-Production:
+** Production: **
 - [ ] Add Nginx to docker
 
 * **DISCLAIMER**
