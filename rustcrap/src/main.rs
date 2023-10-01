@@ -1,11 +1,8 @@
-use csv::{Writer, WriterBuilder};
-use reqwest::blocking::{get, Client};
-use scraper::{self, Html, Selector};
-use select::document::Document;
-use select::predicate::Name;
-use std::collections::HashSet;
+use csv::WriterBuilder;
+use reqwest::blocking::get;
+use scraper::{self, Selector};
 use std::fs::File;
-use std::io::prelude::*;
+
 
 #[derive(Debug, serde::Serialize)]
 struct Item {
