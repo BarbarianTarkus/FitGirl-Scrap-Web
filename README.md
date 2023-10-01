@@ -25,16 +25,13 @@
 
 ## Build
 
-
-
-
-### Docker compose (Redis DB)
+### 1. Docker compose (Redis DB)
 ```
 docker compose up -d
 ```
 
 
-### Rustcrap(Web Scrapper)
+### 2. Rustcrap(Web Scrapper)
 
 ```bash
 cd rustcrap/
@@ -43,7 +40,7 @@ cargo run
 ```
 * It generates a file `output.csv`, by the moment we have load the information gathered manually to the DB
 
-### Webpage
+### 3. Webpage
 
 Frontend developed with SvelteKit
 * Gets all the data from DedisDB with the package ioredis
