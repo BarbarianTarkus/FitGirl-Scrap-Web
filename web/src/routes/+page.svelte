@@ -1,28 +1,35 @@
 <script lang="ts">
-    import { emoji } from './emoji'
-    import type {Game} from '$lib/types'
-    export let games: Game[]
+    import type {Game} from '$lib/types';
+	import { onMount } from 'svelte';
+    import {greet} from '$lib/redis';
+    
+    onMount(async () => {
+       greet()
+    });
 
-    let size = 20
-    let grid = createGrid()
+    let size = 20;
+    //let grid = createGrid()
 
-    function createGrid() {
-        // only want unique cards
-        let cards = new Set<string>()
-        // half because we duplicate the cards
-        let maxSize = games.length
+    // function createGrid() {
+    //     // only want unique cards
+    //     let cards = new Set<string>()
+    //     // half because we duplicate the cards
+    //     console.log("page info:",games)
 
-        while (cards.size < maxSize) {
-            // pick random emoji
-            cards.add(games["title"])
-        }
+    //     let maxSize = games.length
 
-        return [...cards]
-    }
+    //     while (cards.size < maxSize) {
+    //         // pick random emoji
+    //         cards.add(games["title"])
+    //     }
+
+    //     return [...cards]
+    // }
 </script>
 
 
-<div class="cards">
+
+<!-- <div class="cards">
     {#each grid as card, cardIndex}
         <button class="card">
             <div>{card}</div>
@@ -47,5 +54,5 @@
 			border: 4px solid var(--border);
 		}
 	}
-</style>
+</style> -->
 
