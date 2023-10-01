@@ -8,18 +8,19 @@
 
 ## Future addtions
 **Dev:**
-- [ ] Pagination
-- [ ] Search bar
-- [ ] Automate Scrapping Process
-- [ ] Connection to a Videogame DB API
-  **This is for add fuctionality like**
-  - [ ] Custom Filtering
-  - [ ] Like, Dislike
-- [ ] Add native comments
+- [ ] Pagination 📖
+- [ ] Search bar 🔎
+- [ ] Automate Scrapping Process 🕷️🕸️
+- [ ] Connection to a Videogame DB API 🖥️
+  **This is for add fuctionality like** 
+  - [ ] Custom Filtering ✔️✖️
+  - [ ] Like, Dislike 👍
+- [ ] Add native comments 💭
 
 
 **Production:**
-- [ ] Add Nginx to docker
+- [ ] Add Nginx to docker 📚
 
-* **DISCLAIMER**
-This is for only for educational purposes
+⚡⚡ **DISCLAIMER**⚡⚡
+
+This is for only for educational purposes. :books:
