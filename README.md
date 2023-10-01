@@ -22,4 +22,4 @@
 - [ ] Add Nginx to docker
 
 * **DISCLAIMER**
-This is for only for learning purposes
+This is for only for educational purposes
