@@ -1,5 +1,7 @@
 <script lang="ts">
     import { emoji } from './emoji'
+    import type {Game} from '$lib/types'
+    export let games: Game[]
 
     let size = 20
     let grid = createGrid()
@@ -8,12 +10,11 @@
         // only want unique cards
         let cards = new Set<string>()
         // half because we duplicate the cards
-        let maxSize = size / 2
+        let maxSize = games.length
 
         while (cards.size < maxSize) {
             // pick random emoji
-            const randomIndex = Math.floor(Math.random() * emoji.length)
-            cards.add(emoji[randomIndex])
+            cards.add(games["title"])
         }
 
         return [...cards]
@@ -42,7 +43,6 @@
 		width: 300px;
 		font-size: 4rem;
 		background-color: var(--bg-2);
-
 		&.selected {
 			border: 4px solid var(--border);
 		}
