@@ -1,6 +1,8 @@
 FROM node:18
 
 ENV NODE_ENV=production
+ENV REDIS_HOST=redis
+
 RUN apt update && apt install redis iputils-ping -y
 
 WORKDIR /app

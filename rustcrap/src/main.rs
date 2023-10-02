@@ -93,11 +93,13 @@ async fn write_to_redis(items: Vec<Item>) -> RedisResult<()> {
     // user and stored_user will be the same
     //let stored_user: Item = con.get("game","*")?;
     for item in items {
+        let id : String = item.id.clone().unwrap_or_default();
         if item.id.is_some() {
         let _: () = con
             .hset_multiple(
-                &item.id.unwrap_or_default(),
+                "game:".to_string() + &id,
                 &[
+                    ("id", item.id.unwrap_or_default()),
                     ("title", item.title.unwrap_or_default()),
                     ("image", item.image.unwrap_or_default()),
                     ("url", item.url.unwrap_or_default()),
