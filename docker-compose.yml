@@ -3,6 +3,7 @@
 version: '3.9'
 services:
   redis:
+    network_mode: host
     container_name: redis
     image: 'redis/redis-stack:latest'
     ports:
@@ -11,20 +12,22 @@ services:
     volumes:
       - ./redis/data:/data
   web:
+    network_mode: host
     container_name: web1
     image: web1
-    build:
-      ./web
-    user:
-      "node"
+    build: ./web
     environment:
       - NODE_ENV=production
     env_file:
       - .env
+    depends_on:
+      - redis
     ports:
-      - 5000:5000
+      - '3000:3000'
     restart: on-failure
   nginx:
+    network_mode: host
+    image: nginx_server
     container_name: nginx
     build: ./nginx
     ports:

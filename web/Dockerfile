@@ -1,19 +1,17 @@
-FROM node
+FROM node:18
 
-RUN apk add pnpm
-
-
+ENV NODE_ENV=production
+RUN apt update && apt install redis iputils-ping -y
 
 WORKDIR /app
 
-COPY . .
+COPY ./ ./
 
-RUN pnpm ci
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --omit=dev
+# Bundle app source
 
-RUN npm run build
-
-RUN rm -rf src/ static/ emailTemplates/ docker-compose.yml
-
-USER node:node
-
-CMD [node, "build/index.js"]
+#CMD [ "node","build/index.js" ]
+EXPOSE  3000
+CMD [ "node", "build/index.js" ]
