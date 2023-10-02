@@ -1,16 +1,13 @@
-use csv::WriterBuilder;
+use redis::{AsyncCommands, Client, RedisResult};
+use redis_macros::{FromRedisValue, ToRedisArgs};
 use reqwest::blocking::get;
 use scraper::{self, Selector};
-use std::fs::File;
-use redis::{Client, ErrorKind, RedisError, RedisResult};
-
 use serde::{Deserialize, Serialize};
 use tokio;
 
-
-
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, FromRedisValue, ToRedisArgs)]
 struct Item {
+    id: Option<String>,
     title: Option<String>,
     image: Option<String>,
     url: Option<String>,
@@ -22,6 +19,11 @@ struct Item {
 
 impl Item {
     fn new(html_item: scraper::ElementRef) -> Self {
+        let id = html_item
+            .select(&Selector::parse(" div > h3 > span").unwrap())
+            .next()
+            .map(|id| id.text().collect::<String>());
+
         let title = html_item
             .select(&Selector::parse(".entry-title").unwrap())
             .next()
@@ -59,6 +61,7 @@ impl Item {
             .map(str::to_owned);
 
         Item {
+            id,
             title,
             image,
             url,
@@ -70,44 +73,49 @@ impl Item {
     }
 }
 
-fn output_items_to_csv(items: Vec<Item>) {
-    let mut writer = WriterBuilder::new()
-        .has_headers(true)
-        .from_writer(File::create("output.csv").unwrap());
+// fn output_items_to_csv(items: Vec<Item>) {
+//     let mut writer = WriterBuilder::new()
+//         .has_headers(true)
+//         .from_writer(File::create("output.csv").unwrap());
 
-    for item in items {
-        if item.magnet.is_some() {
-            writer.serialize(item).unwrap();
-        }
-    }
-}
-
+//     for item in items {
+//         if item.magnet.is_some() {
+//             writer.serialize(item).unwrap();
+//         }
+//     }
+// }
 
 #[tokio::main]
-async fn write_to_redis(items: Vec<Item>) ->  RedisResult<()> {
+async fn write_to_redis(items: Vec<Item>) -> RedisResult<()> {
     let client = Client::open("redis://localhost:6379")?;
     let mut con = client.get_async_connection().await?;
 
-    // Just use it as you would a primitive
-    for item in items {
-            con.json_set("game", "$", &item).await?;
-            con.json_num_incr_by("user_wrapped_modify", "$.id", 1)
-            .await?;
-    }
     // user and stored_user will be the same
     //let stored_user: Item = con.get("game","*")?;
+    for item in items {
+        if item.id.is_some() {
+        let _: () = con
+            .hset_multiple(
+                &item.id.unwrap_or_default(),
+                &[
+                    ("title", item.title.unwrap_or_default()),
+                    ("image", item.image.unwrap_or_default()),
+                    ("url", item.url.unwrap_or_default()),
+                    ("description", item.description.unwrap_or_default()),
+                    ("magnet", item.magnet.unwrap_or_default()),
+                    ("size", item.size.unwrap_or_default()),
+                    ("date", item.date.unwrap_or_default()),
+                ],
+            )
+            .await?;
+        }
+    }
+
     Ok(())
 }
 
-
-// #[test]
-// fn test_json_wrapper_modify(){
-//     assert_eq!(main(), Ok(()));
-// }
-
-//#[allow(unused_imports)]
+#[allow(unused_imports)]
 fn main() {
-
     let response = get("https://fitgirl-repacks.site/").unwrap();
     let data: String = response.text().unwrap();
     let document = scraper::Html::parse_document(&data);
@@ -120,5 +128,3 @@ fn main() {
     // output it to csv
     write_to_redis(items);
 }
-
-
