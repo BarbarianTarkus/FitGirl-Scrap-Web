@@ -10,8 +10,24 @@ services:
       - '8001:8001'
     volumes:
       - ./redis/data:/data
-#  web:
-#    restart: on-failure
-#    build: ./web
-#    ports:
-#      - '4000:5000'
+  web:
+    container_name: web1
+    image: web1
+    build:
+      ./web
+    user:
+      "node"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    ports:
+      - 5000:5000
+    restart: on-failure
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+    - '80:80'
+    depends_on:
+    - web
