@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Game } from '$lib/types';
-	import { onMount } from 'svelte';
 
-	export let data: { games: Game[] };
+	export let data;
+
  	let size = data.games.length;
  	let grid = createGrid();
  	function createGrid() {

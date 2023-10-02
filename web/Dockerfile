@@ -1,6 +1,8 @@
 FROM node:18
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-ENV NODE_ENV=production
 ENV REDIS_HOST=redis
 
 RUN apt update && apt install redis iputils-ping -y
@@ -9,7 +11,7 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN npm install
+RUN pnpm install
 # If you are building your code for production
 # RUN npm ci --omit=dev
 # Bundle app source
