@@ -30,6 +30,7 @@
         <button class="card">
             <a href={card.url} target="_blank">
                 <img src={card.image} alt={card.title} />
+
             </a>
         </button>
     {/each}
@@ -60,6 +61,7 @@
     /*hover*/
     .card:hover img {
         filter: brightness(0.5);
+
     }
 
 </style>

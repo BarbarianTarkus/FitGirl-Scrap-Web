@@ -6,4 +6,5 @@ export type Game = {
 	description: string;
 	magnet: string;
 	size: string;
+	date: string;
 };
