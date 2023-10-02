@@ -23,11 +23,3 @@ services:
     ports:
       - '3000:3000'
     restart: on-failure
-  nginx:
-    image: nginx_server
-    container_name: nginx
-    build: ./nginx
-    ports:
-    - '80:80'
-    depends_on:
-    - web
