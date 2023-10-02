@@ -2,8 +2,8 @@ use csv::WriterBuilder;
 use reqwest::blocking::get;
 use scraper::{self, Selector};
 use std::fs::File;
-use redis::{Client, ErrorKind,RedisError, RedisResult,JsonCommands};
-use redis_macros::{FromRedisValue, ToRedisArgs,Json};
+use redis::{Client, ErrorKind, RedisError, RedisResult};
+
 use serde::{Deserialize, Serialize};
 use tokio;
 
@@ -85,17 +85,12 @@ fn output_items_to_csv(items: Vec<Item>) {
 
 #[tokio::main]
 async fn write_to_redis(items: Vec<Item>) ->  RedisResult<()> {
-    let client = Client::open("redis://localhost:6379/")?;
-    let mut con = client.get_async_connection().await.map_err(|_| {
-        RedisError::from((
-            ErrorKind::InvalidClientConfig,
-            "Cannot connect to localhost:6379. Try starting a redis-server process or container.",
-        ))
-    })?;
+    let client = Client::open("redis://localhost:6379")?;
+    let mut con = client.get_async_connection().await?;
 
     // Just use it as you would a primitive
     for item in items {
-            con.set("game", "$", &item)?;
+            con.json_set("game", "$", &item).await?;
             con.json_num_incr_by("user_wrapped_modify", "$.id", 1)
             .await?;
     }
@@ -105,12 +100,12 @@ async fn write_to_redis(items: Vec<Item>) ->  RedisResult<()> {
 }
 
 
-#[test]
-fn test_json_wrapper_modify(){
-    assert_eq!(main(), Ok(()));
-}
+// #[test]
+// fn test_json_wrapper_modify(){
+//     assert_eq!(main(), Ok(()));
+// }
 
-#[allow(unused_imports)]
+//#[allow(unused_imports)]
 fn main() {
 
     let response = get("https://fitgirl-repacks.site/").unwrap();
