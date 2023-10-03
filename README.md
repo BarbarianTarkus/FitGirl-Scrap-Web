@@ -29,7 +29,7 @@
 
 ## Build
 
-### 1. Docker compose (Redis DB, Web(Production))
+### 1. Docker compose (Redis DB)
 ```
 docker compose up -d
 ```
