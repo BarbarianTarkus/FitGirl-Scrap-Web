@@ -8,9 +8,9 @@
 
 ## Future addtions
 **Dev:**
-- [*] Pagination(Very bad use of memory for the moment) 📖
+- [x] Pagination(Very bad use of memory for the moment) 📖
  - [ ] Use redis caché for optimze the searchs
-- [*] Search bar 🔎
+- [x] Search bar 🔎
  - [ ] Use os querys for fetch the data from redis
 - [ ] Automate Scrapping Process 🕷️🕸️
 - [ ] Connection to a Videogame DB API 🖥️
