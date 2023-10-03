@@ -21,11 +21,7 @@
 
 
 **Production:**
-
-~~- [x] Add Nginx to docker 📚~~(Useless)
-
-
-
+- [ ] Unofficial Fitgirl Repacks API
 
 ## Build
 
