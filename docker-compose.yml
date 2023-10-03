@@ -13,7 +13,9 @@ services:
   web:
     container_name: web1
     image: web1
-    build: ./web
+    build: 
+      context: ./web
+      dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
     env_file:
