@@ -18,7 +18,9 @@
 		width: 20%;
 		display: flex;
 		align-items: center;
-		padding: 10px;
+		color-scheme: dark;
+	    font-color: white;
+		padding: 10px 0px;
 	}
 
 	#search-field {
@@ -28,5 +30,13 @@
 		border-radius: 5px;
 		padding: 8px;
 		margin: 0 10px 0;
+		font-color: white;
+		font-weight: 900;
+	}
+
+	@media (max-width: 768px) {
+		#search-input-cont {
+			width: 100%;
+		}
 	}
 </style>

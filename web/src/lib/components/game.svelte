@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { GameType } from '$lib/types';
-	export let game: GameType;
+	export let item: GameType;
 </script>
 
 <button class="card">
-	<a href={game.url} target="_blank">
-		<img src={game.image} alt={game.title} />
+	<a href={item.url} target="_blank">
+		<img src={item.image} alt={item.title} />
 	</a>
 </button>
 
@@ -14,6 +14,8 @@
 		background-color: var(--bg-2);
 		border: 4px solid transparent;
 		transition: border-color 0.2s ease-in-out;
+		margin: 0.2rem;
+		padding: 1rem;
 	}
 
 	.card img {

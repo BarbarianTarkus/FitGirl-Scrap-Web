@@ -3,21 +3,16 @@
 	import Searchbar from '$lib/components/searchbar.svelte';
 	import GameComponent from '$lib/components/game.svelte';
 	import NoResults from '$lib/components/noresults.svelte';
+	import { paginate, LightPaginationNav, DarkPaginationNav } from 'svelte-paginate'
+	import Game from '$lib/components/game.svelte';
 	//Retrieve all data
 	export let data: { games: GameType[] };
 	let games = data.games;
 
-	let size = games.length;
-	let grid = createGrid();
-	function createGrid() {
-		let cards = new Set<GameType>();
-		let i = 0;
-		while (cards.size < size) {
-			cards.add(games[i]);
-			++i;
-		}
-		return [...cards];
-	}
+	let items = games;
+	let currentPage = 1
+	let pageSize = 10
+	$: paginatedItems = paginate({ items, pageSize, currentPage })
 
 	//Query Results
 	let filteredGames: GameType[] = [];
@@ -45,43 +40,49 @@
 		<NoResults />
 	{:else if filteredGames.length > 0}
 		<div class="cards">
-			{#each filteredGames as game}
-				<GameComponent {game} />
+			{#each filteredGames as item}
+				<GameComponent {item} />
 			{/each}
 		</div>
 	{:else}
-		<div class="cards">
-			{#each games as game}
-				<GameComponent {game} />
+		<div class="items">
+			{#each paginatedItems as item}
+				<GameComponent {item} />
+
 			{/each}
 		</div>
 	{/if}
 </main>
 
-<style>
-	.cards {
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-		gap: 0.4rem;
-	}
+<DarkPaginationNav
+  totalItems="{items.length}"
+  pageSize="{pageSize}"
+  currentPage="{currentPage}"
+  limit="{1}"
+  showStepOptions="{true}"
+  on:setPage="{(e) => currentPage = e.detail.page}"
+/>
 
-	.cards {
+
+<style>
+	.items {
 		display: grid;
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: repeat(5, 2fr);
 		gap: 0.4rem;
 	}
 
 	@media (max-width: 768px) {
-		.cards {
+		.items {
 			grid-template-rows: auto;
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
 	@media (max-width: 400px) {
-		.cards {
+		.items {
 			grid-template-rows: auto;
 			grid-template-columns: repeat(1, 1fr);
 		}
 	}
+
 </style>
