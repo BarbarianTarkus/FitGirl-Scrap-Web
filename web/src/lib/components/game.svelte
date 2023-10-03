@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { GameType } from '$lib/types';
 	export let item: GameType;
+
+
 </script>
 
 <button class="card">
-	<a href={item.url} target="_blank">
+	<a href={item.url}>
 		<img src={item.image} alt={item.title} />
 	</a>
 </button>
