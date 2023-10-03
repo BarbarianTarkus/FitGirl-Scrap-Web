@@ -14,11 +14,6 @@
 	--pulse: hsl(9 100% 64%);
 }
 
-html,
-body {
-	height: 100%;
-}
-
 body {
 	display: grid;
 	place-content: center;
@@ -26,6 +21,11 @@ body {
 	font-family: 'Poppins', sans-serif;
 	color: var(--txt-1);
 	background-color: var(--bg-1);
+}
+@media screen and (max-width: 768px) {
+	body {
+		padding: 1rem;
+	}
 }
 
 h1 {

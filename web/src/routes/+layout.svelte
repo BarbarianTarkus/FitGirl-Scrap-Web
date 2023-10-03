@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Matching Game</title>
+	<title>Fitgirl Webpage</title>
 </svelte:head>
 
 <slot />

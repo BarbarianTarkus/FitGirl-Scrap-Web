@@ -6,7 +6,7 @@ import { Schema, Repository } from 'redis-om';
 const host = env.REDIS_HOST;
 
 const redis = await createClient({
-	url: 'redis://default:my-top-secret@'.concat(host).concat(':6379')
+	url: 'redis://'.concat(host)
 });
 
 redis.on('error', (err) => console.log('Redis Client Error', err));
