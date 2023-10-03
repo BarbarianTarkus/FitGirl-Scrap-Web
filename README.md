@@ -36,15 +36,18 @@ docker compose up -d
 
 
 ### 2. Rustcrap(Web Scrapper)
+Needs a redis server running
+Crawls every page of the official website and saves to the redis DB
 
 ```bash
 cd rustcrap/
 cargo build
 cargo run
 ```
-* Put every game found in the official page in a redis Hash
+* By the moment it needs to be launched manually
 
-### 3. Webpage
+
+### Debugging Web App
 
 Frontend developed with SvelteKit
 * Gets all the data from DedisDB with the package ioredis
