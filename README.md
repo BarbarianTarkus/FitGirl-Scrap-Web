@@ -21,7 +21,8 @@
 
 
 **Production:**
-~~- [ ] Add Nginx to docker 📚~~(Useless)
+
+~~- [x] Add Nginx to docker 📚~~(Useless)
 
 
 
