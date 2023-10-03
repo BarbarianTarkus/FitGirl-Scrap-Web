@@ -3,12 +3,15 @@
 
 
 ## Preview
-![image](https://github.com/BarbarianTarkus/FitGirl-Scrap-Web/assets/44118965/66e89b72-024b-4c47-858b-bcd5222b463f)
+![image](https://github.com/BarbarianTarkus/FitGirl-Scrap-Web/assets/44118965/c71d0317-5836-41d9-813c-994eff9db9ad)
+
 
 ## Future addtions
 **Dev:**
-- [ ] Pagination 📖
-- [ ] Search bar 🔎
+- [x] Pagination(Very bad use of memory for the moment) 📖
+  - [ ] Use redis caché for optimze the searchs
+- [x] Search bar 🔎
+  - [ ] Use os querys for fetch the data from redis
 - [ ] Automate Scrapping Process 🕷️🕸️
 - [ ] Connection to a Videogame DB API 🖥️
   **This is for add fuctionality like** 
@@ -18,7 +21,8 @@
 
 
 **Production:**
-- [ ] Add Nginx to docker 📚
+
+~~- [x] Add Nginx to docker 📚~~(Useless)
 
 
 
@@ -32,15 +36,18 @@ docker compose up -d
 
 
 ### 2. Rustcrap(Web Scrapper)
+Needs a redis server running
+Crawls every page of the official website and saves to the redis DB
 
 ```bash
 cd rustcrap/
 cargo build
 cargo run
 ```
-* It generates a file `output.csv`, by the moment we have load the information gathered manually to the DB
+* By the moment it needs to be launched manually
 
-### 3. Webpage
+
+### Debugging Web App
 
 Frontend developed with SvelteKit
 * Gets all the data from DedisDB with the package ioredis
