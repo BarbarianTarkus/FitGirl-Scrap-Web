@@ -118,15 +118,20 @@ async fn write_to_redis(items: Vec<Item>) -> RedisResult<()> {
 
 #[allow(unused_imports)]
 fn main() {
-    let response = get("https://fitgirl-repacks.site/").unwrap();
-    let data: String = response.text().unwrap();
-    let document = scraper::Html::parse_document(&data);
+    for i in 0..398 {
+        print!("Page: {}", i)
+        let url = "https://fitgirl-repacks.site/page/".to_owned() + i.to_string().as_str();
+        let response = get(url).unwrap();
+        let data: String = response.text().unwrap();
+        let document = scraper::Html::parse_document(&data);
 
-    let html_item_selector = Selector::parse("article.post").unwrap();
-    let html_items = document.select(&html_item_selector);
+        let html_item_selector = Selector::parse("article.post").unwrap();
+        let html_items = document.select(&html_item_selector);
 
-    let items: Vec<Item> = html_items.map(Item::new).collect();
+        let items: Vec<Item> = html_items.map(Item::new).collect();
+        // output it to csv
+        write_to_redis(items);
+    }
 
-    // output it to csv
-    write_to_redis(items);
+
 }
