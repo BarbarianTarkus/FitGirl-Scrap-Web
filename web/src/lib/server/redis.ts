@@ -32,7 +32,7 @@ const gameSchema = new Schema(
 const gameRepository = new Repository(gameSchema, redis);
 await gameRepository.createIndex();
 
-export async function getGames() {
+export async function getGames(query: string) {
 	const games = await gameRepository.search().sortBy('date', 'DESC').return.all();
 
 	return games.map((game) => {

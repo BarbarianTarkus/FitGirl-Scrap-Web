@@ -3,16 +3,16 @@
 	import Searchbar from '$lib/components/searchbar.svelte';
 	import GameComponent from '$lib/components/game.svelte';
 	import NoResults from '$lib/components/noresults.svelte';
-	import { paginate, LightPaginationNav, DarkPaginationNav } from 'svelte-paginate'
+	import { paginate, LightPaginationNav, DarkPaginationNav } from 'svelte-paginate';
 	import Game from '$lib/components/game.svelte';
 	//Retrieve all data
 	export let data: { games: GameType[] };
 	let games = data.games;
 
 	let items = games;
-	let currentPage = 1
-	let pageSize = 10
-	$: paginatedItems = paginate({ items, pageSize, currentPage })
+	let currentPage = 1;
+	let pageSize = 10;
+	$: paginatedItems = paginate({ items, pageSize, currentPage });
 
 	//Query Results
 	let filteredGames: GameType[] = [];
@@ -48,21 +48,19 @@
 		<div class="items">
 			{#each paginatedItems as item}
 				<GameComponent {item} />
-
 			{/each}
 		</div>
 	{/if}
 </main>
 
 <DarkPaginationNav
-  totalItems="{items.length}"
-  pageSize="{pageSize}"
-  currentPage="{currentPage}"
-  limit="{1}"
-  showStepOptions="{true}"
-  on:setPage="{(e) => currentPage = e.detail.page}"
+	totalItems={items.length}
+	{pageSize}
+	{currentPage}
+	limit={1}
+	showStepOptions={true}
+	on:setPage={(e) => (currentPage = e.detail.page)}
 />
-
 
 <style>
 	.items {
@@ -84,5 +82,4 @@
 			grid-template-columns: repeat(1, 1fr);
 		}
 	}
-
 </style>

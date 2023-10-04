@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { GameType } from '$lib/types';
 	export let item: GameType;
-
-
 </script>
 
 <button class="card">

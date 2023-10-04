@@ -19,7 +19,7 @@
 		display: flex;
 		align-items: center;
 		color-scheme: dark;
-	    font-color: white;
+		font-color: white;
 		padding: 10px 0px;
 	}
 
