@@ -3,6 +3,7 @@ import { createClient } from 'redis';
 import type { Game } from '$lib/types';
 import { Schema, Repository } from 'redis-om';
 
+
 const host = env.REDIS_HOST;
 
 const redis = await createClient({
@@ -16,7 +17,7 @@ const gameSchema = new Schema(
 	'game',
 	{
 		id: { type: 'string' },
-		title: { type: 'string' },
+		title: { type: 'text' },
 		image: { type: 'string' },
 		url: { type: 'string' },
 		description: { type: 'string' },
@@ -32,9 +33,26 @@ const gameSchema = new Schema(
 const gameRepository = new Repository(gameSchema, redis);
 await gameRepository.createIndex();
 
-export async function getGames(query: string) {
-	const games = await gameRepository.search().sortBy('date', 'DESC').return.all();
+export async function getGames(searchTerm: string) {
+	
+	let games = [];
 
+	const offset = 0;
+	const count = 10;
+
+	if (searchTerm === '') {
+		games = await gameRepository.search()
+		.sortBy('date', 'DESC').return.page(offset, count);
+	}else {
+		games = await gameRepository.search()
+		.where('title').match(searchTerm)
+		.sortBy('date', 'DESC').return.page(offset, count);
+	}
+
+
+
+	console.log("serachTerm:", searchTerm,"--", games.length);
+	
 	return games.map((game) => {
 		const mappedGame: Game = {
 			id: game.id?.toString() ?? '',

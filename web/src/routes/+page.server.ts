@@ -1,7 +1,10 @@
 import { getGames } from '$lib/server/redis';
+import type { PageServerLoad } from './$types';
 
-export async function load() {
-	const data = await getGames();
+
+export const load: PageServerLoad = async () => {
+
+	const data = await getGames("");
 	return {
 		games: data
 	};
