@@ -69,7 +69,7 @@
 
 <style>
 	section {
-		width: 100%;
+		width: 80%;
 		display: flex;
 		justify-content: space-around;
 		
