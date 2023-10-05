@@ -4,44 +4,35 @@ import type { Game } from '$lib/types';
 import { Schema, Repository } from 'redis-om';
 import type { EntityData } from 'redis-om';
 
-const host = env.REDIS_HOST;
+export async function setupDB() {
+	const host = env.REDIS_HOST;
 
-export const redis = await createClient({
-	url: 'redis://'.concat(host)
-});
+	const redis = await createClient({
+		url: 'redis://'.concat(host)
+	});
 
-redis.on('error', (err) => console.log('Redis Client Error', err));
-await redis.connect();
+	redis.on('error', (err) => console.log('Redis Client Error', err));
+	await redis.connect();
 
-const gameSchema = new Schema(
-	'game',
-	{
-		id: { type: 'string' },
-		title: { type: 'text', sortable: true },
-		image: { type: 'string' },
-		url: { type: 'string' },
-		description: { type: 'string' },
-		magnet: { type: 'string' },
-		size: { type: 'string' },
-		date: { type: 'string', sortable: true }
-	},
-	{
-		dataStructure: 'HASH'
-	}
-);
-
-export const gameRepository = new Repository(gameSchema, redis);
-await gameRepository.createIndex();
-
-export async function getAllGames() {
-	let games = [];
-
-	const offset = 0;
-	const count = 10;
-
-	games = await gameRepository.search().sortBy('date', 'DESC').return.page(offset, count);
-
-	return mapGames(games);
+	const gameSchema = new Schema(
+		'game',
+		{
+			id: { type: 'string' },
+			title: { type: 'text', sortable: true },
+			image: { type: 'string' },
+			url: { type: 'string' },
+			description: { type: 'string' },
+			magnet: { type: 'string' },
+			size: { type: 'string' },
+			date: { type: 'string', sortable: true }
+		},
+		{
+			dataStructure: 'HASH'
+		}
+	);
+	const gameRepository = new Repository(gameSchema, redis);
+	await gameRepository.createIndex();
+	return gameRepository;
 }
 
 export function mapGames(games: EntityData[]): Game[] {

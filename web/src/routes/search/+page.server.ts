@@ -1,9 +1,15 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { gameRepository, mapGames } from '$lib/server/redis';
+import { mapGames, setupDB } from '$lib/server/redis';
 import type { Entity } from 'redis-om';
+import {building} from '$app/environment';
+
 
 export const load: PageServerLoad = async ({ url }) => {
+	let gameRepository;
+	if (!building) {
+		gameRepository = await setupDB();
+	}
 	const q = url.searchParams.get('q').toString().toLowerCase();
 
 	if (!q) {

@@ -11,7 +11,9 @@ WORKDIR /app
 COPY . /app
 
 
-CMD [ "pnpm","install", "&&", "pnpm","run","build"]
+RUN pnpm install && pnpm run build
+
+#CMD [ "pnpm","install", "&&", "pnpm","run","build"]
 
 FROM node:20
 ENV PNPM_HOME="/pnpm"

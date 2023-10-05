@@ -1,7 +1,14 @@
-import { gameRepository, mapGames } from '$lib/server/redis';
+import { mapGames, setupDB } from '$lib/server/redis';
 import type { GameType } from '$lib/types';
+import {building} from '$app/environment';
+
 
 export async function load({ params }) {
+	let gameRepository;
+	if (!building){
+		gameRepository = await setupDB();
+	}
+
 	const page = Number(params.page);
 	const dataLength = await gameRepository.search().return.all();
 	async function getGames(page: number) {
