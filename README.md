@@ -4,7 +4,8 @@
 
 ## Preview
 
-![Uploading webpagestate.png…]()
+![webpagestate](https://github.com/BarbarianTarkus/FitGirl-Scrap-Web/assets/44118965/1336bb19-3059-40f8-89eb-992a1dd9398c)
+
 
 
 ## Future addtions
