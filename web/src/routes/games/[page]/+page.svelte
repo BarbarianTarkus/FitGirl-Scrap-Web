@@ -3,6 +3,8 @@
 	import GameComponent from '$lib/components/game.svelte';
 	import SearchBar from '$lib/components/searchbar.svelte';
 	import { page } from '$app/stores';
+	import { Pagination } from 'flowbite-svelte';
+	import { DarkMode } from 'flowbite-svelte';
 
 	export let data: PageData;
 
@@ -10,25 +12,69 @@
 	let pageSize = 6;
 	$: totalItems = data.size;
 	$: totalPages = Math.ceil(totalItems / pageSize);
-	$: currentPage = Number($page.params.page) - 1;
+	$: currentPage = Number($page.params.page);
+
+	//Flowbite 
+
+
+	function pagesArray() {
+		let pages = [];
+		if (currentPage < 3) {
+			for (let i = 1; i <= 5; i++) {
+				pages.push({name: i.toString(), href:'/games/'+(i), active: i == currentPage});
+			}
+		} else if (currentPage == totalPages) {
+			for (let i = totalPages - 4; i <= totalPages; i++) {
+				pages.push({name: i.toString(), href:'/games/'+(i), active: i == currentPage});
+			}
+		} else {
+			for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+				pages.push({name: i.toString(), href:'/games/'+(i), active: i == currentPage});
+			}
+		}
+		return pages;
+	}
+
+	$: pages = pagesArray(currentPage);
+
+	
+	const previous = () => {
+		$: currentPage = currentPage - 1;
+		window.location.href = '/games/'+(currentPage);
+	};
+	const next = () => {
+		$: currentPage = currentPage + 1;
+		window.location.href = '/games/'+(currentPage);
+	};
 </script>
 
-<main id="gameshelf">
+<section>
+	<div></div>
 	<form action="/search">
 		<SearchBar />
 	</form>
+	<DarkMode />	
+</section>
+
+
+<main id="gameshelf">
+
 
 	<div class="games">
 		{#each data.gamesPaged as game}
 			<GameComponent {game} />
 		{/each}
 	</div>
-
-	<div class="pagination">
-		{#each Array(totalPages) as _, idx}
-			<a href="/games/{idx + 1}" class={currentPage === idx ? 'text-emeral-300' : ''}>
-				{idx + 1}
-			</a>
-		{/each}
-	</div>
+	
+	<Pagination { pages } on:previous={previous} on:next={next} />
 </main>
+
+<style>
+	section {
+		width: 50%;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+
+</style>

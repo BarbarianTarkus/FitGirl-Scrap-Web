@@ -1,28 +1,10 @@
 <script lang="ts">
+
+	import { Label, Input } from 'flowbite-svelte';
 </script>
 
-<div id="search-input-cont">
-	<input type="search" id="q" name="q" placeholder="Search..." autocomplete="on" />
-</div>
 
-<style>
-	#search-input-cont {
-		width: 30%;
-		display: flex;
-		align-items: center;
-		color-scheme: dark;
-		font-style: white;
-		padding: 10px 0px;
-	}
+	<div class="mb-6">
+		<Input type="search" id="q" name="q" size="lg" placeholder="Search" autocomplete="on"  />
+	</div>
 
-	@media (max-width: 768px) {
-		#search-input-cont {
-			width: 50%;
-		}
-	}
-	@media (max-width: 400px) {
-		#search-input-cont {
-			width: 50%;
-		}
-	}
-</style>

@@ -3,28 +3,30 @@
 	export let game: GameType;
 </script>
 
-<button class="card">
+<button class="game">
 	<a href={game.url}>
 		<img src={game.image} alt={game.title} />
 	</a>
 </button>
 
-<style>
-	.card {
-		background-color: var(--bg-2);
-		border: 4px solid transparent;
-		transition: border-color 0.2s ease-in-out;
-		margin: 0.2rem;
-		padding: 1rem;
+<style lang="postcss">
+	
+	.game {
+		height: 27em;
+		width: 20em;
+		background-color: #1a202c;
+		border: solid transparent;
+		border-radius: 0.25rem;
 	}
 
-	.card img {
+	.game img {
 		height: 100%;
 		width: 100%;
-		object-fit: cover;
+		border-radius: 0.5rem;
+		filter: contrast(0.9) blur(0.1px) brightness(1.1) saturate(1.1);
 	}
 
-	.card:hover img {
+	.game:hover img {
 		filter: brightness(0.5);
 	}
 </style>
