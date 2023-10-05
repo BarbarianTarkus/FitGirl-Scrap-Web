@@ -56,19 +56,20 @@
 	};
 </script>
 
-<section>
-	<Breadcrumb class="flex margin " aria-label="Default breadcrumb example">
-		<BreadcrumbItem href="/" home>Home</BreadcrumbItem>
-		<BreadcrumbItem href="/games">Games</BreadcrumbItem>
-	</Breadcrumb>
 
-	<form class="search" action="/search">
-		<SearchBar />
-	</form>
-	<DarkMode />
-</section>
 
 <main id="gameshelf">
+
+	<section>
+		<DarkMode />
+		<Breadcrumb class="flex margin " aria-label="Default breadcrumb example">
+			<BreadcrumbItem href="/" home>Home</BreadcrumbItem>
+			<BreadcrumbItem href="/games">Games</BreadcrumbItem>
+		</Breadcrumb>
+		<form class="search" action="/search">
+			<SearchBar />
+		</form>
+	</section>
 	<div class="games">
 		{#each data.gamesPaged as game}
 			<GameComponent {game} />
@@ -80,14 +81,20 @@
 
 <style>
 	section {
-		width: 80%;
+		width: 100%;
 		display: flex;
-		justify-content: space-around;
-
+		justify-content: space-between;
 		align-items: center;
 	}
 	.search {
 		margin-top: 5px;
 		margin-bottom: 0px;
+	}
+
+
+	@media (max-width: 400px) {
+		section {
+			flex-direction: column;
+		}
 	}
 </style>
