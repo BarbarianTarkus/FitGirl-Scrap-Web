@@ -50,16 +50,14 @@
 
 <section>
 	<div></div>
-	<form action="/search">
+	<form class=search action="/search">
 		<SearchBar />
 	</form>
-	<DarkMode />	
+	<DarkMode  />	
 </section>
 
 
 <main id="gameshelf">
-
-
 	<div class="games">
 		{#each data.gamesPaged as game}
 			<GameComponent {game} />
@@ -71,10 +69,15 @@
 
 <style>
 	section {
-		width: 50%;
+		width: 100%;
 		display: flex;
 		justify-content: space-around;
+		
 		align-items: center;
+	}
+	.search{
+		margin-top: 5px;
+		margin-bottom: 0px;	
 	}
 
 </style>

@@ -4,7 +4,7 @@
 </script>
 
 
-	<div class="mb-6">
-		<Input type="search" id="q" name="q" size="lg" placeholder="Search" autocomplete="on"  />
-	</div>
+<div class="mb-2">
+	<Input type="search" id="q" name="q" size="lg" placeholder="Search" autocomplete="on"  />
+</div>
 
