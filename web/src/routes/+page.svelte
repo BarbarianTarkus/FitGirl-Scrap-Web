@@ -3,90 +3,60 @@
 	import Searchbar from '$lib/components/searchbar.svelte';
 	import GameComponent from '$lib/components/game.svelte';
 	import NoResults from '$lib/components/noresults.svelte';
-	import { paginate, LightPaginationNav, DarkPaginationNav } from 'svelte-paginate';
-	import Game from '$lib/components/game.svelte';
+	import { page } from '$app/stores';
 	//Retrieve all data
-	export let data: { games: GameType[] };
-	let games = data.games;
-
-
-
-	//Pagination
-	let items = games;
-	let currentPage = 1;
+	export let data;
+	let games: GameType[] = data.games;
 	let pageSize = 6;
-	$: paginatedItems = paginate({ items, pageSize, currentPage });
-
-	//Query Results
-	let filteredGames: GameType[] = [];
-
-	//For Select Menu
-
-	// For Search Input
-	let searchTerm = '';
-	const searchGames = () => {
-		return (filteredGames = games.filter((game) => {
-			let gameTitle = game.title.toLowerCase();
-			return gameTitle.includes(searchTerm.toLowerCase());
-		}));
-	};
+	$: totalItems = data.size;
+	$: totalPages = Math.ceil(totalItems / pageSize);
+	$: currentPage = (Number($page.url.searchParams.get('skip')) || 0) / pageSize;
 </script>
 
-
-
 <main id="gameshelf">
-	<Searchbar bind:searchTerm on:input={searchGames} />
+	<form action="/search">
+		<Searchbar />
+	</form>
 
-	{#if searchTerm && filteredGames.length == 0}
-		<NoResults />
-	{:else if filteredGames.length > 0}
-		<div class="cards">
-			{#each filteredGames as item}
-				<GameComponent {item} />
-			{/each}
-		</div>
-	{:else}
-		<div class="items">
-			{#each paginatedItems as item}
-				<GameComponent {item} />
-			{/each}
-		</div>
-	{/if}
+	<div class="games">
+		{#each games as game}
+			<GameComponent {game} />
+		{/each}
+	</div>
+
+	<div class="pagination">
+		{#each Array(totalPages) as _, idx}
+			<a href="/games/{idx+1}">
+				{idx + 1}
+			</a>
+		{/each}
+	</div>
 </main>
 
-<DarkPaginationNav
-	totalItems={items.length}
-	{pageSize}
-	{currentPage}
-	limit={1}
-	showStepOptions={true}
-	on:setPage={(e) => (currentPage = e.detail.page)}
-/>
-
 <style>
-	main{
+	main {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
-	.items {
+	.games {
 		width: 70%;
 		height: auto;
 		display: grid;
-		
+
 		grid-template-columns: repeat(3, 2fr);
 		gap: 0.4rem;
 	}
 
 	@media (max-width: 768px) {
-		.items {
+		.games {
 			grid-template-rows: auto;
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 400px) {
-		.items {
+		.games {
 			grid-template-rows: auto;
 			grid-template-columns: repeat(1, 1fr);
 		}

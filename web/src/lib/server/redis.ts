@@ -2,11 +2,11 @@ import { env } from '$env/dynamic/private';
 import { createClient } from 'redis';
 import type { Game } from '$lib/types';
 import { Schema, Repository } from 'redis-om';
-
+import type { EntityData, Entity } from 'redis-om';
 
 const host = env.REDIS_HOST;
 
-const redis = await createClient({
+export const redis = await createClient({
 	url: 'redis://'.concat(host)
 });
 
@@ -17,7 +17,7 @@ const gameSchema = new Schema(
 	'game',
 	{
 		id: { type: 'string' },
-		title: { type: 'text' },
+		title: { type: 'text', sortable: true },
 		image: { type: 'string' },
 		url: { type: 'string' },
 		description: { type: 'string' },
@@ -30,29 +30,21 @@ const gameSchema = new Schema(
 	}
 );
 
-const gameRepository = new Repository(gameSchema, redis);
+export const gameRepository = new Repository(gameSchema, redis);
 await gameRepository.createIndex();
 
-export async function getGames(searchTerm: string) {
-	
+export async function getAllGames() {
 	let games = [];
 
 	const offset = 0;
 	const count = 10;
 
-	if (searchTerm === '') {
-		games = await gameRepository.search()
-		.sortBy('date', 'DESC').return.page(offset, count);
-	}else {
-		games = await gameRepository.search()
-		.where('title').match(searchTerm)
-		.sortBy('date', 'DESC').return.page(offset, count);
-	}
+	games = await gameRepository.search().sortBy('date', 'DESC').return.page(offset, count);
 
+	return mapGames(games);
+}
 
-
-	console.log("serachTerm:", searchTerm,"--", games.length);
-	
+export function mapGames(games: EntityData[]): Game[] {
 	return games.map((game) => {
 		const mappedGame: Game = {
 			id: game.id?.toString() ?? '',

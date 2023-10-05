@@ -1,11 +1,12 @@
-import { getGames } from '$lib/server/redis';
+import { getAllGames, redis, gameRepository, mapGames } from '$lib/server/redis';
 import type { PageServerLoad } from './$types';
-
+import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {
-
-	const data = await getGames("");
+	const data = await getAllGames();
+	const dataLength = await gameRepository.search().return.all();
 	return {
-		games: data
+		games: data,
+		size: dataLength.length
 	};
-}
+};
