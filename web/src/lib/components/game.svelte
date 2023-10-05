@@ -10,7 +10,6 @@
 </button>
 
 <style lang="postcss">
-	
 	.game {
 		height: 27em;
 		width: 20em;
