@@ -2,15 +2,12 @@
 	import type { GameType } from '$lib/types';
 	import Searchbar from '$lib/components/searchbar.svelte';
 	import GameComponent from '$lib/components/game.svelte';
-	import NoResults from '$lib/components/noresults.svelte';
-	import { page } from '$app/stores';
 	//Retrieve all data
 	export let data;
 	let games: GameType[] = data.games;
 	let pageSize = 6;
 	$: totalItems = data.size;
 	$: totalPages = Math.ceil(totalItems / pageSize);
-	$: currentPage = (Number($page.url.searchParams.get('skip')) || 0) / pageSize;
 </script>
 
 <main id="gameshelf">
@@ -26,7 +23,7 @@
 
 	<div class="pagination">
 		{#each Array(totalPages) as _, idx}
-			<a href="/games/{idx+1}">
+			<a href="/games/{idx + 1}">
 				{idx + 1}
 			</a>
 		{/each}

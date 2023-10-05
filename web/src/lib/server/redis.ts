@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { createClient } from 'redis';
 import type { Game } from '$lib/types';
 import { Schema, Repository } from 'redis-om';
-import type { EntityData, Entity } from 'redis-om';
+import type { EntityData } from 'redis-om';
 
 const host = env.REDIS_HOST;
 
