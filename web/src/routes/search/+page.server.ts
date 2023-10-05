@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ url }) => {
 			.where('title')
 			.match('*' + q + '*')
 			.sortBy('date', 'DESC')
-			.return.all();
+			.return.page(0, 6);
 		const games = mapGames(res);
 		return games;
 	};
