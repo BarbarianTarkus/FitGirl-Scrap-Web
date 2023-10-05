@@ -15,7 +15,7 @@
 
 <style>
 	#search-input-cont {
-		width: 20%;
+		width: 30%;
 		display: flex;
 		align-items: center;
 		color-scheme: dark;
@@ -36,7 +36,12 @@
 
 	@media (max-width: 768px) {
 		#search-input-cont {
-			width: 100%;
+			width: 50%;
+		}
+	}
+	@media (max-width: 400px) {
+		#search-input-cont {
+			width: 50%;
 		}
 	}
 </style>

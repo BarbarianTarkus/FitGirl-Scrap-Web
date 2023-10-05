@@ -9,20 +9,21 @@
 	export let data: { games: GameType[] };
 	let games = data.games;
 
+
+
+	//Pagination
 	let items = games;
 	let currentPage = 1;
-	let pageSize = 10;
+	let pageSize = 6;
 	$: paginatedItems = paginate({ items, pageSize, currentPage });
 
 	//Query Results
 	let filteredGames: GameType[] = [];
 
 	//For Select Menu
-	$: console.log(filteredGames);
 
 	// For Search Input
 	let searchTerm = '';
-
 	const searchGames = () => {
 		return (filteredGames = games.filter((game) => {
 			let gameTitle = game.title.toLowerCase();
@@ -31,11 +32,11 @@
 	};
 </script>
 
-<section>
-	<Searchbar bind:searchTerm on:input={searchGames} />
-</section>
+
 
 <main id="gameshelf">
+	<Searchbar bind:searchTerm on:input={searchGames} />
+
 	{#if searchTerm && filteredGames.length == 0}
 		<NoResults />
 	{:else if filteredGames.length > 0}
@@ -63,16 +64,24 @@
 />
 
 <style>
+	main{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 	.items {
+		width: 70%;
+		height: auto;
 		display: grid;
-		grid-template-columns: repeat(5, 2fr);
+		
+		grid-template-columns: repeat(3, 2fr);
 		gap: 0.4rem;
 	}
 
 	@media (max-width: 768px) {
 		.items {
 			grid-template-rows: auto;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { GameType } from '$lib/types';
-	export let item: GameType;
+	export let game: GameType;
 </script>
 
 <button class="card">
-	<a href={item.url}>
-		<img src={item.image} alt={item.title} />
+	<a href={game.url}>
+		<img src={game.image} alt={game.title} />
 	</a>
 </button>
 
@@ -26,19 +26,5 @@
 
 	.card:hover img {
 		filter: brightness(0.5);
-	}
-
-	@media (max-width: 768px) {
-		.cards {
-			grid-template-rows: auto;
-			grid-template-columns: repeat(3, 1fr);
-		}
-	}
-
-	@media (max-width: 400px) {
-		.cards {
-			grid-template-rows: auto;
-			grid-template-columns: repeat(1, 1fr);
-		}
 	}
 </style>
