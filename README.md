@@ -10,11 +10,16 @@
 **Dev:**
 - [x] Pagination(Very bad use of memory for the moment) 📖
 - [x] Search bar 🔎
-- [ ] Use redis caché for optimze the searchs and pagination
+- [ ] Use redis caché for optimize navigation, query's...
+- [x] Pagination
 - [ ] Automate Scrapping Process 🕷️🕸️
-- [ ] Connection to a Videogame DB API 🖥️
+- [ ] Connection to a VideogameDB API 🖥️
   **This is for add fuctionality like** 
-  - [ ] Custom Filtering ✔️✖️
+  - [ ] Advanced Filtering ✔️✖️
+      - [ ] Order, filter, by compression ratio
+      - [ ] Online, Coop, Single player features
+      - [ ] Genre
+      - [ ] Stats(Times Viewed, Downloaded, Game Scores) 
   - [ ] Like, Dislike 👍
 - [ ] Add native comments 💭
 
